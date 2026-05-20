@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "scripts/.lab_ips": "shellscript",
+    "*.lab_ips": "shellscript"
+  }
+}

@@ -1,0 +1,19 @@
+# Variáveis sensíveis — nunca commitar
+.env
+app/.env
+scripts/.lab_ips
+
+# Backups gerados pelo sed (scripts)
+*.bak
+
+# Node
+node_modules/
+npm-debug.log*
+
+# macOS
+.DS_Store
+
+# Chaves SSH (nunca commitar chaves privadas)
+*.pem
+*_key
+!*_key.pub
