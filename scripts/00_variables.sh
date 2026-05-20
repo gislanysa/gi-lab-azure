@@ -16,6 +16,7 @@ export NSG_PUBLIC="nsg-public"
 export NSG_PRIVATE="nsg-private"
 
 # VMs 
+export VM_APP="vm-app"
 export VM_DB="vm-db"
 export VM_SIZE="${VM_SIZE:-Standard_B2s}"
 export VM_SIZE_FALLBACKS="\
