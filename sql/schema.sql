@@ -2,7 +2,6 @@ CREATE DATABASE IF NOT EXISTS marcozero_ecommerce
   CHARACTER SET utf8mb4
   COLLATE       utf8mb4_unicode_ci;
 USE marcozero_ecommerce;
-
 CREATE TABLE IF NOT EXISTS produtos (
   id           BIGINT UNSIGNED      NOT NULL AUTO_INCREMENT,
   sku          VARCHAR(40)          NOT NULL,
@@ -13,12 +12,11 @@ CREATE TABLE IF NOT EXISTS produtos (
   ativo        TINYINT(1)           NOT NULL DEFAULT 1,
   created_at   TIMESTAMP            NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at   TIMESTAMP            NOT NULL DEFAULT CURRENT_TIMESTAMP
-                                    ON UPDATE CURRENT_TIMESTAMP,
+                                     ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   UNIQUE KEY uq_produtos_sku (sku),
   KEY idx_produtos_ativo (ativo)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE IF NOT EXISTS clientes (
   id           BIGINT UNSIGNED      NOT NULL AUTO_INCREMENT,
   nome         VARCHAR(160)         NOT NULL,
@@ -30,7 +28,6 @@ CREATE TABLE IF NOT EXISTS clientes (
   PRIMARY KEY (id),
   UNIQUE KEY uq_clientes_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE IF NOT EXISTS pedidos (
   id           BIGINT UNSIGNED      NOT NULL AUTO_INCREMENT,
   cliente_id   BIGINT UNSIGNED      NOT NULL,
@@ -48,7 +45,6 @@ CREATE TABLE IF NOT EXISTS pedidos (
     ON UPDATE CASCADE
     ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE IF NOT EXISTS pedido_itens (
   id           BIGINT UNSIGNED      NOT NULL AUTO_INCREMENT,
   pedido_id    BIGINT UNSIGNED      NOT NULL,
@@ -69,7 +65,6 @@ CREATE TABLE IF NOT EXISTS pedido_itens (
     ON UPDATE CASCADE
     ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO produtos (sku, nome, descricao, preco, estoque) VALUES
   ('SAB-LAV-100', 'Sabonete artesanal de lavanda 100g',
      'Sabonete vegetal com óleos essenciais de lavanda', 18.90, 120),
@@ -82,7 +77,6 @@ INSERT INTO clientes (nome, email, telefone, cidade, uf) VALUES
   ('Ana Souza',   'ana.souza@example.com',  '81999990001', 'Olinda',  'PE'),
   ('Bruno Lima',  'bruno.lima@example.com', '81999990002', 'Recife',  'PE')
 ON DUPLICATE KEY UPDATE nome = VALUES(nome);
-
 INSERT INTO pedidos (cliente_id, status, total)
 SELECT c.id, 'PAGO', 0.00
   FROM clientes c
@@ -103,10 +97,3 @@ SELECT p.id, pr.id, 1, pr.preco
 UPDATE pedidos p
    SET total = (SELECT COALESCE(SUM(subtotal),0) FROM pedido_itens i WHERE i.pedido_id = p.id)
  WHERE p.id = 1;
-
-CREATE USER IF NOT EXISTS 'app_user'@'10.0.1.%'
-  IDENTIFIED BY 'TrocarSenhaApp#2026';          
-GRANT SELECT, INSERT, UPDATE, DELETE
-  ON marcozero_ecommerce.*
-  TO 'app_user'@'10.0.1.%';
-FLUSH PRIVILEGES;

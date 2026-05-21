@@ -19,4 +19,4 @@ echo "  az group show --name $RG     # deve retornar 'ResourceGroupNotFound' qua
 echo
 echo "Captura final obrigatoria do relatorio:"
 echo "  az group show --name $RG"
-echo "  (saida do erro 'ResourceGroupNotFound' = print da ultima imagem do relatorio)"
+echo "  (saida do erro 'ResourceGroupNotFound' confirma que a exclusao foi concluida)"
